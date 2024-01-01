@@ -20,7 +20,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Documento</label>
-                                <input class="form-control" type="text" name="documento" value="{{ $devedor->documento }}" required>
+                                <input class="form-control" type="text" name="documento" value="{{ $devedor->documento }}">
                             </div>
                         </div>
                     </div>
