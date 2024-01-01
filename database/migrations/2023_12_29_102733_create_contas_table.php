@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('devedor_id')->nullable();
             $table->foreign('devedor_id')->references('id')->on('devedores')->onDelete('cascade');
             $table->string('descricao')->nullable();
-            $table->string('comprovante')->nullable();
+            $table->string('cobranca')->nullable();
             $table->date('vencimento')->nullable();
             $table->decimal('valor', 18, 2)->default(0);
             $table->date('data_pagamento')->nullable();
