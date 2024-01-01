@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class ContaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         $descricao = $request->input('descricao');

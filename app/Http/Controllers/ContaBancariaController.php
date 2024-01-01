@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ContaBancariaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         $banco_id = $request->input('banco_id');

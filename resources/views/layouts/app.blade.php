@@ -19,6 +19,8 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @guest
+                    @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -66,6 +68,7 @@
                             </a>
                         </li>
                     </ul>
+                    @endif
 
                     <ul class="navbar-nav ms-auto">
                         @guest
