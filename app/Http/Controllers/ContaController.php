@@ -61,7 +61,7 @@ class ContaController extends Controller
                 }
             }
 
-            $path = public_path('cobrancas');
+            $path = public_path('arquivos/cobrancas');
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
@@ -118,7 +118,7 @@ class ContaController extends Controller
                 }
             }
 
-            $path = public_path('comprovantes');
+            $path = public_path('arquivos/comprovantes');
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
