@@ -10,13 +10,19 @@
                     @csrf
 
                     <div class="row py-2">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nome</label>
                                 <input class="form-control" type="text" name="nome" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Apelido</label>
+                                <input class="form-control" type="text" name="apelido">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Documento</label>
                                 <input class="form-control" type="text" name="documento">

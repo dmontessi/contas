@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nome')->nullable();
+            $table->string('apelido')->nullable();
             $table->string('documento')->nullable();
             $table->boolean('ativo')->default(TRUE);
             $table->timestamps();

@@ -11,7 +11,7 @@ class DevedorController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $nome = $request->input('nome');
@@ -38,6 +38,7 @@ class DevedorController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'apelido' => 'nullable|string|max:255',
             'documento' => 'nullable|string|max:255',
         ]);
 
@@ -60,6 +61,7 @@ class DevedorController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'apelido' => 'nullable|string|max:255',
             'documento' => 'nullable|string|max:255',
         ]);
 

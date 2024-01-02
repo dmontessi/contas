@@ -16,6 +16,7 @@ class Devedor extends Model
     protected $fillable = [
         'user_id',
         'nome',
+        'apelido',
         'documento',
         'ativo',
     ];
