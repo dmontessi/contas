@@ -35,8 +35,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="40%">Nome</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="40%">Documento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Apelido</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Documento</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -52,6 +53,11 @@
                                 <td class="text-center align-middle">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->nome }}
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
+                                        {{ $devedor->apelido }}
                                     </a>
                                 </td>
                                 <td class="text-center align-middle">
