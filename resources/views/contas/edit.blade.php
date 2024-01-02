@@ -96,7 +96,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Forma de Pagamento</label>
-                                <select class="form-control" name="formapagamento_id" required>
+                                <select class="form-control" name="formapagamento_id">
                                     <option selected value disabled>Selecione</option>
                                     @foreach($formaspagamentos as $formapagamento)
                                     <option value="{{ $formapagamento->id }}" {{ $conta->formapagamento_id == $formapagamento->id ? 'selected' : '' }}>
@@ -109,7 +109,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Conta de Pagamento</label>
-                                <select class="form-control" name="contabancaria_pagamento_id" required>
+                                <select class="form-control" name="contabancaria_pagamento_id">
                                     <option selected value disabled>Selecione</option>
                                     @foreach($contaspagamentos as $contapagamento)
                                     <option value="{{ $contapagamento->id }}" {{ $conta->contabancaria_pagamento_id == $contapagamento->id ? 'selected' : '' }}>
