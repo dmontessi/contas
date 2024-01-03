@@ -34,10 +34,11 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Descrição</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Vencimento</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Valor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Fornecedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Descrição</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -45,6 +46,11 @@
                             @if ($contador > 0)
                             @foreach ($contas as $conta)
                             <tr>
+                                <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                                    <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
+                                        {{ $conta->fornecedor->apelido }}
+                                    </a>
+                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
                                         {{ $conta->descricao }}
