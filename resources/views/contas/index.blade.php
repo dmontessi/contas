@@ -35,10 +35,11 @@
                         <thead>
                             <tr>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="40%">Descrição</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Vencimento</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Valor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Descrição</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="5%">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,11 @@
                                 <td class="text-center align-middle">
                                     <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
                                         {{ $conta->id }}
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
+                                        {{ $conta->devedor->apelido }}
                                     </a>
                                 </td>
                                 <td class="text-center align-middle">
