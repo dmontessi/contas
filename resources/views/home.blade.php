@@ -124,7 +124,7 @@ $contador = $contas_vencendo->count();
         </small>
     </div>
     <div class="d-flex justify-content-center">
-        <small>Não há contas vencendo hoje</small>
+        <small class="text-secondary">Não há contas vencendo hoje</small>
     </div>
 
     @endif
