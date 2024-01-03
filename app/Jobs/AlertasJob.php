@@ -48,16 +48,34 @@ class AlertasJob implements ShouldQueue, ShouldBeUnique
 
                     if (file_exists($file_path)) {
                         if ($conta->user->telegram_id) {
-                            $telegramService->sendDocument($file_path, $message, $conta->user->telegram_id);
+                            $ids = explode(',', $conta->user->telegram_id);
+                            $ids = array_map('trim', $ids);
+                            $ids = array_filter($ids);
+
+                            foreach ($ids as $id) {
+                                $telegramService->sendDocument($file_path, $message, $id);
+                            }
                         }
                     } else {
                         if ($conta->user->telegram_id) {
-                            $telegramService->sendMessage($message, $conta->user->telegram_id);
+                            $ids = explode(',', $conta->user->telegram_id);
+                            $ids = array_map('trim', $ids);
+                            $ids = array_filter($ids);
+
+                            foreach ($ids as $id) {
+                                $telegramService->sendMessage($message, $id);
+                            }
                         }
                     }
                 } else {
                     if ($conta->user->telegram_id) {
-                        $telegramService->sendMessage($message, $conta->user->telegram_id);
+                        $ids = explode(',', $conta->user->telegram_id);
+                        $ids = array_map('trim', $ids);
+                        $ids = array_filter($ids);
+
+                        foreach ($ids as $id) {
+                            $telegramService->sendMessage($message, $id);
+                        }
                     }
                 }
             }
