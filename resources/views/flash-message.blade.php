@@ -63,7 +63,7 @@
 
 @if ($errors->any() && !Route::is('login'))
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>{{ Auth::user()->primeiro_nome }}!</strong> Verifique os erros abaixo:
+    <strong>Verifique os erros abaixo:
     <ul class="mb-1">
         @foreach ($errors->all() as $error)
         <li>{{ $error }}</li>
