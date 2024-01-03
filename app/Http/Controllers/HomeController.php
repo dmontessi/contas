@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Conta;
 use App\Models\Devedor;
+use App\Services\TelegramService;
 
 class HomeController extends Controller
 {

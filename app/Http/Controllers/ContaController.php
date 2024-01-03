@@ -125,7 +125,29 @@ class ContaController extends Controller
             'comprovante' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
-        $conta->update($request->except('comprovante'));
+        $conta->update($request->except('cobranca', 'comprovante'));
+
+        if ($request->hasFile('cobranca')) {
+
+            if ($conta->cobranca) {
+                $oldFilePath = public_path($conta->cobranca);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            $path = public_path('arquivos/cobrancas');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $fileName = 'cobranca_' . $conta->id . '_' . now()->format('Ymd_His') . '.' . $request->file('cobranca')->getClientOriginalExtension();
+
+            $request->file('cobranca')->move($path, $fileName);
+
+            $conta->cobranca = 'arquivos/cobrancas/' . $fileName;
+            $conta->save();
+        }
 
         if ($request->hasFile('comprovante')) {
 
