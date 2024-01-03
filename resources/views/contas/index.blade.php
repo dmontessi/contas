@@ -34,8 +34,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Devedor</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="30%">Descrição</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
@@ -46,11 +45,6 @@
                             @if ($contador > 0)
                             @foreach ($contas as $conta)
                             <tr>
-                                <td class="text-center align-middle">
-                                    <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $conta->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle">
                                     <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
                                         {{ $conta->devedor->apelido }}
