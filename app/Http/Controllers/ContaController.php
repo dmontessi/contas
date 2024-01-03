@@ -23,6 +23,8 @@ class ContaController extends Controller
         $descricao = $request->input('descricao');
 
         $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
+            ->orderBy('vencimento', 'asc')
+            ->orderBy('id', 'desc')
             ->where(function ($query) use ($descricao) {
                 if ($descricao) {
                     $query->where('descricao', 'LIKE', "%$descricao%");
