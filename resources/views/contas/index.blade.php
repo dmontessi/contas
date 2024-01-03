@@ -35,8 +35,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Descrição</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Descrição</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="5%">Ações</th>
