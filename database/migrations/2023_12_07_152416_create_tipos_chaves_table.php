@@ -23,6 +23,7 @@ return new class extends Migration
             ['nome' => 'Celular'],
             ['nome' => 'CNPJ'],
             ['nome' => 'CPF'],
+            ['nome' => 'E-mail'],
         ]);
     }
 

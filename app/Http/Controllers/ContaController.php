@@ -25,6 +25,7 @@ class ContaController extends Controller
         $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
             ->orderBy('vencimento', 'asc')
             ->orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
             ->where(function ($query) use ($descricao) {
                 if ($descricao) {
                     $query->where('descricao', 'LIKE', "%$descricao%");
@@ -88,15 +89,23 @@ class ContaController extends Controller
 
     public function show(Conta $conta)
     {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         return view('contas.show', compact('conta'));
     }
 
     public function edit(Conta $conta)
     {
-        $devedores = Devedor::all();
-        $fornecedores = Fornecedor::all();
+        if ($conta->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         $formaspagamentos = FormaPagamento::all();
-        $contaspagamentos = ContaBancaria::all();
+        $devedores = Devedor::where('user_id', auth()->id())->get();
+        $fornecedores = Fornecedor::where('user_id', auth()->id())->get();
+        $contaspagamentos = ContaBancaria::where('user_id', auth()->id())->get();
         return view('contas.edit', compact('conta', 'devedores', 'fornecedores', 'formaspagamentos', 'contaspagamentos'));
     }
 
@@ -145,6 +154,10 @@ class ContaController extends Controller
 
     public function destroy(Conta $conta)
     {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+        
         $conta->delete();
         return redirect()->route('contas.index');
     }

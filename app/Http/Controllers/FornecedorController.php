@@ -17,6 +17,7 @@ class FornecedorController extends Controller
         $nome = $request->input('nome');
 
         $fornecedores = Fornecedor::orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
             ->where(function ($query) use ($nome) {
                 if ($nome) {
                     $query->where('nome', 'LIKE', "%$nome%");
@@ -49,11 +50,19 @@ class FornecedorController extends Controller
 
     public function show(Fornecedor $fornecedor)
     {
+        if ($fornecedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         return view('fornecedores.show', compact('fornecedor'));
     }
 
     public function edit(Fornecedor $fornecedor)
     {
+        if ($fornecedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         return view('fornecedores.edit', compact('fornecedor'));
     }
 
@@ -72,6 +81,10 @@ class FornecedorController extends Controller
 
     public function destroy(Fornecedor $fornecedor)
     {
+        if ($fornecedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         $fornecedor->delete();
         return redirect()->route('fornecedores.index');
     }

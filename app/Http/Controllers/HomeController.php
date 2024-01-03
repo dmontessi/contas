@@ -20,24 +20,29 @@ class HomeController extends Controller
         $contas_vencendo = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
             ->orderBy('vencimento', 'asc')
             ->orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
             ->whereDate('vencimento', Carbon::today()->toDateString())->get();
 
         $abertos = Conta::whereNull('data_pagamento')
             ->whereYear('vencimento', Carbon::today()->format('Y'))
             ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->where('user_id', auth()->id())
             ->sum('valor');
 
         $pagos = Conta::whereNotNull('data_pagamento')
             ->whereYear('vencimento', Carbon::today()->format('Y'))
             ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->where('user_id', auth()->id())
             ->sum('valor');
 
         $total = Conta::whereYear('vencimento', Carbon::today()->format('Y'))
             ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->where('user_id', auth()->id())
             ->sum('valor');
 
         $_contas = Conta::whereYear('vencimento', Carbon::today()->format('Y'))
             ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->where('user_id', auth()->id())
             ->get();
 
         $grafico = [];
@@ -48,7 +53,7 @@ class HomeController extends Controller
             $grafico[$_conta->devedor->apelido]['cor'] = $_conta->devedor->cor;
         }
 
-        $devedores = Devedor::pluck('apelido', 'id')->all();
+        $devedores = Devedor::where('user_id', auth()->id())->pluck('apelido', 'id')->all();
 
         $grafico2 = [];
 
@@ -62,6 +67,7 @@ class HomeController extends Controller
                 $contas = Conta::where('devedor_id', $key)
                     ->whereYear('vencimento', $data->year)
                     ->whereMonth('vencimento', $data->month)
+                    ->where('user_id', auth()->id())
                     ->get();
 
                 $valor = $contas->sum('valor');

@@ -19,6 +19,7 @@ class ContaBancariaController extends Controller
         $banco_id = $request->input('banco_id');
 
         $contasbancarias = ContaBancaria::orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
             ->where(function ($query) use ($banco_id) {
                 if ($banco_id) {
                     $query->where('banco_id', $banco_id);
@@ -56,11 +57,19 @@ class ContaBancariaController extends Controller
 
     public function show(ContaBancaria $contabancaria)
     {
+        if ($contabancaria->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         return view('contasbancarias.show', compact('contabancaria'));
     }
 
     public function edit(ContaBancaria $contabancaria)
     {
+        if ($contabancaria->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         $bancos = Banco::all();
         $tiposchaves = TipoChave::all();
         return view('contasbancarias.edit', compact('contabancaria', 'bancos', 'tiposchaves'));
@@ -83,6 +92,10 @@ class ContaBancariaController extends Controller
 
     public function destroy(ContaBancaria $contabancaria)
     {
+        if ($contabancaria->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+        
         $contabancaria->delete();
         return redirect()->route('contasbancarias.index');
     }

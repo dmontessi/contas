@@ -17,6 +17,7 @@ class DevedorController extends Controller
         $nome = $request->input('nome');
 
         $devedores = Devedor::orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
             ->where(function ($query) use ($nome) {
                 if ($nome) {
                     $query->where('nome', 'LIKE', "%$nome%");
@@ -49,11 +50,19 @@ class DevedorController extends Controller
 
     public function show(Devedor $devedor)
     {
+        if ($devedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
         return view('devedores.show', compact('devedor'));
     }
 
     public function edit(Devedor $devedor)
     {
+        if ($devedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+        
         return view('devedores.edit', compact('devedor'));
     }
 
@@ -72,6 +81,10 @@ class DevedorController extends Controller
 
     public function destroy(Devedor $devedor)
     {
+        if ($devedor->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+        
         $devedor->delete();
         return redirect()->route('devedores.index');
     }
