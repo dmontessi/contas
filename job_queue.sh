@@ -15,5 +15,3 @@ else
     /usr/bin/php /home/u631657739/public_html/contas/artisan queue:restart >> "$log_file" 2>&1
     nohup /usr/bin/php /home/u631657739/public_html/contas/artisan queue:work --daemon >> "$log_file" 2>&1 &
 fi
-
-/usr/bin/php /home/u631657739/public_html/contas/artisan send:mail >> "$log_file" 2>&1
