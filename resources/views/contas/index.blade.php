@@ -34,11 +34,11 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Descrição</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Devedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="5%">Ações</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Descrição</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Vencimento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Valor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
