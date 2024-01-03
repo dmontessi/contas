@@ -21,9 +21,19 @@ class HomeController extends Controller
             ->orderBy('id', 'desc')
             ->whereDate('vencimento', Carbon::today()->toDateString())->get();
 
-        $abertos = Conta::whereNull('data_pagamento')->whereDate('vencimento', Carbon::today()->toDateString())->sum('valor');
-        $pagos = Conta::whereNotNull('data_pagamento')->whereDate('vencimento', Carbon::today()->toDateString())->sum('valor');
-        $total = Conta::whereDate('vencimento', Carbon::today()->toDateString())->sum('valor');
+        $abertos = Conta::whereNull('data_pagamento')
+            ->whereYear('vencimento', Carbon::today()->format('Y'))
+            ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->sum('valor');
+
+        $pagos = Conta::whereNotNull('data_pagamento')
+            ->whereYear('vencimento', Carbon::today()->format('Y'))
+            ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->sum('valor');
+
+        $total = Conta::whereYear('vencimento', Carbon::today()->format('Y'))
+            ->whereMonth('vencimento', Carbon::today()->format('m'))
+            ->sum('valor');
 
         return view('home', compact('contas', 'pagos', 'abertos', 'total'));
     }
