@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Models\Conta;
+use App\Models\Devedor;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
+        $contas_vencendo = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
             ->orderBy('vencimento', 'asc')
             ->orderBy('id', 'desc')
             ->whereDate('vencimento', Carbon::today()->toDateString())->get();
@@ -40,36 +41,38 @@ class HomeController extends Controller
             ->get();
 
         $grafico = [];
-        $mesatual = 0;
 
         foreach ($_contas as $_conta) {
             $valor_atual = $grafico[$_conta->devedor->apelido]['valor'] ?? 0;
             $grafico[$_conta->devedor->apelido]['valor'] = $valor_atual + $_conta->valor;
-
-            $mesatual = $mesatual + $_conta->valor;
+            $grafico[$_conta->devedor->apelido]['cor'] = $_conta->devedor->cor;
         }
+
+        $devedores = Devedor::pluck('apelido', 'id')->all();
 
         $grafico2 = [];
 
-        $mesretrasado_label = ucfirst(Carbon::now()->subMonths(2)->locale('pt-BR')->isoFormat('MMMM[/]YYYY'));
-        $mesretrasado = Conta::whereYear('vencimento', Carbon::today()->subMonths(2)->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->subMonths(2)->format('m'))
-            ->sum('valor');
+        for ($i = 2; $i >= 0; $i--) {
+            $data = Carbon::now()->subMonths($i);
+            $grafico2[$data->locale('pt-BR')->isoFormat('MMMM[/]YYYY')] = [];
 
-        $grafico2[$mesretrasado_label]['valor'] = $mesretrasado;
+            foreach ($devedores as $key => $devedor) {
+                $cor = Devedor::find($key)->cor;
 
-        $mespassado_label = ucfirst(Carbon::now()->subMonths(1)->locale('pt-BR')->isoFormat('MMMM[/]YYYY'));
-        $mespassado = Conta::whereYear('vencimento', Carbon::today()->subMonths(1)->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->subMonths(1)->format('m'))
-            ->sum('valor');
+                $contas = Conta::where('devedor_id', $key)
+                    ->whereYear('vencimento', $data->year)
+                    ->whereMonth('vencimento', $data->month)
+                    ->get();
 
-        $grafico2[$mespassado_label]['valor'] = $mespassado;
+                $valor = $contas->sum('valor');
 
-        $mesatual_label = ucfirst(Carbon::now()->locale('pt-BR')->isoFormat('MMMM[/]YYYY'));
-        $mesatual;
+                $grafico2[$data->locale('pt-BR')->isoFormat('MMMM[/]YYYY')][$devedor] = [
+                    'valor' => $valor,
+                    'cor' => $cor,
+                ];
+            }
+        }
 
-        $grafico2[$mesatual_label]['valor'] = $mesatual;
-
-        return view('home', compact('contas', 'pagos', 'abertos', 'total', 'grafico', 'grafico2'));
+        return view('home', compact('contas_vencendo', 'pagos', 'abertos', 'total', 'grafico', 'devedores', 'grafico2'));
     }
 }

@@ -3,12 +3,12 @@
 @section('content')
 
 @php
-$contador = $contas->count();
+$contador = $contas_vencendo->count();
 @endphp
 
 <div class="d-flex flex-column my-4">
 
-    <div class="d-flex justify-content-center p-3 mx-5 my-2">
+    <div class="d-flex justify-content-center">
         <div class="col-md-4">
             <div class="card p-2 mx-2 text-bg-success">
                 <div class="d-flex justify-content-between align-items-center px-2">
@@ -59,6 +59,19 @@ $contador = $contas->count();
         </div>
     </div>
 
+    <div class="d-flex justify-content-center mt-4">
+        <div class="col-md-6">
+            <div class="card p-3 mx-1">
+                <canvas id="grafico1"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 mx-1">
+                <canvas id="grafico2"></canvas>
+            </div>
+        </div>
+    </div>
+
     @if ($contador > 0)
     <div class="d-flex justify-content-center mt-4">
         <small class="d-inline-flex px-2 py-1 fw-semibold text-danger bg-danger-subtle border border-danger-subtle rounded-2">
@@ -67,7 +80,7 @@ $contador = $contas->count();
         </small>
     </div>
 
-    <div class="d-flex justify-content-center card p-3 mx-5 my-2">
+    <div class="d-flex justify-content-center card p-3 mt-2">
         <div class="table-responsive min-table-height">
             <table class="table table-hover mb-0">
                 <thead>
@@ -78,7 +91,7 @@ $contador = $contas->count();
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contas as $conta)
+                    @foreach ($contas_vencendo as $conta)
                     <tr>
                         <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
@@ -101,7 +114,9 @@ $contador = $contas->count();
             </table>
         </div>
     </div>
+
     @else
+
     <div class="d-flex justify-content-center mt-4">
         <small class="d-inline-flex mb-1 px-2 py-1 fw-semibold text-success bg-success-subtle border border-success-subtle rounded-2">
             <i class="bi bi-check2-circle me-1"></i>
@@ -111,22 +126,10 @@ $contador = $contas->count();
     <div class="d-flex justify-content-center">
         <small>Não há contas vencendo hoje</small>
     </div>
+
     @endif
-
-    <div class="d-flex justify-content-center mt-4">
-        <div class="col-md-6">
-            <div class="card p-3 mx-1">
-                <canvas id="grafico1"></canvas>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card p-3 mx-1">
-                <canvas id="grafico2"></canvas>
-            </div>
-        </div>
-    </div>
-
 </div>
+
 <script type="module">
     window.formatCurrency = function(value) {
         return new Intl.NumberFormat('pt-BR', {
@@ -150,6 +153,11 @@ $contador = $contas->count();
                 data: [
                     @foreach($grafico as $chave => $dados)
                         {{ $dados['valor'] }},
+                    @endforeach
+                ],
+                backgroundColor: [
+                    @foreach($grafico as $chave => $dados)
+                        '{{ $dados['cor'] }}',
                     @endforeach
                 ],
                 borderWidth: 1
@@ -176,45 +184,29 @@ $contador = $contas->count();
 
     });
 
-    var grafico2 = new Chart(document.getElementById('grafico2').getContext('2d'), {
-        type: 'bar',
+    var dados = @json($grafico2);
+
+    var ctx = document.getElementById('grafico2').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
         data: {
-
-            labels: [
-                @foreach($grafico2 as $chave => $dados)
-                    '{{ $chave }}',
-                @endforeach
-            ],
-
-            datasets: [{
-                label: 'Valor por mês',
-                data: [
-                    @foreach($grafico2 as $chave => $dados)
-                        {{ $dados['valor'] }},
-                    @endforeach
-                ],
-                borderWidth: 1
-            }]
+            labels: Object.keys(dados),
+            datasets: Object.keys(dados[Object.keys(dados)[0]]).map(function (devedor) {
+                return {
+                    label: devedor,
+                    data: Object.values(dados).map(function (valores) {
+                        return valores[devedor].valor || 0;
+                    }),
+                    borderColor: dados[Object.keys(dados)[0]][devedor].cor || '#CCCCCC', // Corrigido aqui
+                    fill: false,
+                };
+            }),
         },
         options: {
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        return formatCurrency(tooltipItem.yLabel);
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    ticks: {
-                        callback: function(value) {
-                            return formatCurrency(value);
-                        }
-                    }
-                }
-            }
-        }
-
+            responsive: true,
+            maintainAspectRatio: false,
+        },
     });
 </script>
 @endsection
