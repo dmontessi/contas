@@ -77,7 +77,7 @@ class ContaController extends Controller
 
             $request->file('cobranca')->move($path, $fileName);
 
-            $conta->cobranca = 'cobrancas/' . $fileName;
+            $conta->cobranca = 'arquivos/cobrancas/' . $fileName;
             $conta->save();
         }
 
@@ -134,7 +134,7 @@ class ContaController extends Controller
 
             $request->file('comprovante')->move($path, $fileName);
 
-            $conta->comprovante = 'comprovantes/' . $fileName;
+            $conta->comprovante = 'arquivos/comprovantes/' . $fileName;
             $conta->save();
         }
 
