@@ -5,19 +5,8 @@ window.$ = jQuery;
 
 import 'jquery-mask-plugin';
 
-[resources/js/bootstrap.js]
-import _ from 'lodash';
-window._ = _;
+import Chart from 'chart.js/auto';
+import { Colors } from 'chart.js';
+Chart.register(Colors);
 
-import * as bootstrap from 'bootstrap'
-
-try {
-  window.bootstrap = bootstrap;
-} catch (e) {}
-
-export { bootstrap }
-
-import axios from 'axios';
-window.axios = axios;
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.Chart = Chart;

@@ -91,7 +91,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1" colspan="5">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="6">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>
