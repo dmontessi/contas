@@ -47,17 +47,17 @@ class AlertasJob implements ShouldQueue, ShouldBeUnique
                     $file_path = public_path($conta->cobranca);
 
                     if (file_exists($file_path)) {
-                        if ($conta->user_id->telegram_id) {
-                            $telegramService->sendDocument($file_path, $message, $conta->user_id->telegram_id);
+                        if ($conta->user->telegram_id) {
+                            $telegramService->sendDocument($file_path, $message, $conta->user->telegram_id);
                         }
                     } else {
-                        if ($conta->user_id->telegram_id) {
-                            $telegramService->sendMessage($message, $conta->user_id->telegram_id);
+                        if ($conta->user->telegram_id) {
+                            $telegramService->sendMessage($message, $conta->user->telegram_id);
                         }
                     }
                 } else {
-                    if ($conta->user_id->telegram_id) {
-                        $telegramService->sendMessage($message, $conta->user_id->telegram_id);
+                    if ($conta->user->telegram_id) {
+                        $telegramService->sendMessage($message, $conta->user->telegram_id);
                     }
                 }
             }
