@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 use App\Models\Conta;
 use App\Models\Devedor;
 use App\Models\Fornecedor;
 use App\Models\ContaBancaria;
 use App\Models\FormaPagamento;
-use Illuminate\Http\Request;
 
 class ContaController extends Controller
 {
@@ -15,12 +17,12 @@ class ContaController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $descricao = $request->input('descricao');
 
-        $contas = Conta::orderBy('id', 'desc')
+        $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
             ->where(function ($query) use ($descricao) {
                 if ($descricao) {
                     $query->where('descricao', 'LIKE', "%$descricao%");
