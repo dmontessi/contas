@@ -29,7 +29,7 @@ class ContaController extends Controller
                 if ($descricao) {
                     $query->where('descricao', 'LIKE', "%$descricao%");
                 }
-            })->paginate(15);
+            })->paginate(100);
 
         $contas->appends(['descricao' => $descricao]);
 
