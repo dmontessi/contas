@@ -34,9 +34,8 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Nome</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Apelido</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Apelido</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Documento</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Cor</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
@@ -46,11 +45,6 @@
                             @if ($contador > 0)
                             @foreach ($devedores as $devedor)
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1">
-                                    <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $devedor->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->nome }}
@@ -91,7 +85,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="5">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

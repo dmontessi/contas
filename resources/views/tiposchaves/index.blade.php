@@ -34,8 +34,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="80%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="90%">Nome</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -43,11 +42,6 @@
                             @if ($contador > 0)
                             @foreach ($tiposchaves as $tipochave)
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1">
-                                    <a href="{{ route('tiposchaves.edit', $tipochave->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $tipochave->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('tiposchaves.edit', $tipochave->id) }}" class="list-group-item list-group-item-action">
                                         {{ $tipochave->nome }}
@@ -73,7 +67,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="2">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

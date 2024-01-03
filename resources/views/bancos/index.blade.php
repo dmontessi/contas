@@ -34,9 +34,8 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Código</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="60%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="70%">Nome</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -44,11 +43,6 @@
                             @if ($contador > 0)
                             @foreach ($bancos as $banco)
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1">
-                                    <a href="{{ route('bancos.edit', $banco->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $banco->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('bancos.edit', $banco->id) }}" class="list-group-item list-group-item-action">
                                         {{ $banco->codigo }}

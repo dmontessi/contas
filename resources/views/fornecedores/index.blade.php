@@ -34,10 +34,9 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="50%">Nome</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Apelido</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Documento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Documento</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -45,11 +44,6 @@
                             @if ($contador > 0)
                             @foreach ($fornecedores as $fornecedor)
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1">
-                                    <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $fornecedor->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $fornecedor->nome }}
@@ -85,7 +79,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="4">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

@@ -39,10 +39,9 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Agência</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Conta</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Banco</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="40%">Banco</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ativa</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
@@ -51,11 +50,6 @@
                             @if ($contador > 0)
                             @foreach ($contasbancarias as $contabancaria)
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1">
-                                    <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
-                                        {{ $contabancaria->id }}
-                                    </a>
-                                </td>
                                 <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->agencia }}
@@ -96,7 +90,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle m-0 py-0 px-1" colspan="6">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="5">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>
