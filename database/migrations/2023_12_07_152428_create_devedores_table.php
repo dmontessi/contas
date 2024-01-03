@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nome')->nullable();
             $table->string('apelido')->nullable();
             $table->string('documento')->nullable();
+            $table->string('cor', 7)->default('#000000');
             $table->boolean('ativo')->default(TRUE);
             $table->timestamps();
         });

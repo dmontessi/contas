@@ -45,27 +45,27 @@
                             @if ($contador > 0)
                             @foreach ($fornecedores as $fornecedor)
                             <tr>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $fornecedor->id }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $fornecedor->nome }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $fornecedor->apelido }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('fornecedores.edit', $fornecedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $fornecedor->documento }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <div class="dropdown">
                                         <button class="btn py-0 px-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-list"></i>
@@ -85,7 +85,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

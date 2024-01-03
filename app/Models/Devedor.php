@@ -18,6 +18,7 @@ class Devedor extends Model
         'nome',
         'apelido',
         'documento',
+        'cor',
         'ativo',
     ];
 

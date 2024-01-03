@@ -16,7 +16,7 @@
                                 <input class="form-control" type="text" name="nome" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Apelido</label>
                                 <input class="form-control" type="text" name="apelido">
@@ -26,6 +26,12 @@
                             <div class="form-group">
                                 <label>Documento</label>
                                 <input class="form-control" type="text" name="documento">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>Cor</label>
+                                <input type="color" class="form-control form-control-color" name="cor">
                             </div>
                         </div>
                     </div>

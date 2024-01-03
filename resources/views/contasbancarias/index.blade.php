@@ -51,32 +51,32 @@
                             @if ($contador > 0)
                             @foreach ($contasbancarias as $contabancaria)
                             <tr>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->id }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->agencia }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->conta }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->banco->nome }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('contasbancarias.edit', $contabancaria->id) }}" class="list-group-item list-group-item-action">
                                         {{ $contabancaria->ativa ? 'Sim' : 'Não' }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <div class="dropdown">
                                         <button class="btn py-0 px-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-list"></i>
@@ -96,7 +96,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle" colspan="6">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="6">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

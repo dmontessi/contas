@@ -44,22 +44,22 @@
                             @if ($contador > 0)
                             @foreach ($bancos as $banco)
                             <tr>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('bancos.edit', $banco->id) }}" class="list-group-item list-group-item-action">
                                         {{ $banco->id }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('bancos.edit', $banco->id) }}" class="list-group-item list-group-item-action">
                                         {{ $banco->codigo }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('bancos.edit', $banco->id) }}" class="list-group-item list-group-item-action">
                                         {{ $banco->nome }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <div class="dropdown">
                                         <button class="btn py-0 px-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-list"></i>
@@ -79,7 +79,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>

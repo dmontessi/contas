@@ -35,9 +35,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">ID</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="35%">Nome</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Nome</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Apelido</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Documento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Documento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">Cor</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -45,34 +46,39 @@
                             @if ($contador > 0)
                             @foreach ($devedores as $devedor)
                             <tr>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->id }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->nome }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->apelido }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action">
                                         {{ $devedor->documento }}
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle m-0 py-0 px-1">
+                                    <a href="{{ route('devedores.edit', $devedor->id) }}" class="list-group-item list-group-item-action d-flex justify-content-center">
+                                        <i style="color:{{ $devedor->cor }}" class="bi bi-square-fill"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle m-0 py-0 px-1">
                                     <div class="dropdown">
                                         <button class="btn py-0 px-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-list"></i>
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <form action="{{ route('devedores.destroy', $devedor->id) }}" method="POST"> 
+                                                <form action="{{ route('devedores.destroy', $devedor->id) }}" method="POST">
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     @csrf
                                                     <a href="#" class="dropdown-item py-0" onclick="this.parentNode.submit(); return false;">Excluir</a>
@@ -85,7 +91,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td class="text-center align-middle" colspan="3">Nenhum resultado encontrado</td>
+                                <td class="text-center align-middle m-0 py-0 px-1" colspan="3">Nenhum resultado encontrado</td>
                             </tr>
                             @endif
                         </tbody>
