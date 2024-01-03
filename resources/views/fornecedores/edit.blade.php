@@ -26,7 +26,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Documento</label>
-                                <input class="form-control" type="text" name="documento" value="{{ $fornecedor->documento }}">
+                                <input class="form-control cpfcnpj" type="text" name="documento" value="{{ $fornecedor->documento }}">
                             </div>
                         </div>
                     </div>

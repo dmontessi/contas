@@ -72,17 +72,17 @@
 
                     <ul class="navbar-nav ms-auto">
                         @guest
-                            @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @endif
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
 
-                            @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                            @endif
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -112,4 +112,17 @@
         </main>
     </div>
 </body>
+<script type="module">
+    $(document).ready(function() {
+        var CpfCnpjMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length <= 11 ? '000.000.000-009' : '00.000.000/0000-00';
+        },
+        cpfCnpjpOptions = {
+                onKeyPress: function(val, e, field, options) {
+                field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
+            }
+        };
+        $('.cpfcnpj').mask('000.000.000-000', cpfCnpjpOptions);
+    });
+</script>
 </html>
