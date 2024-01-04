@@ -39,8 +39,8 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Devedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Banco</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="30%">Banco</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Agência</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="20%">Conta</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
