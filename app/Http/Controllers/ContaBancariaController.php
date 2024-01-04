@@ -44,6 +44,7 @@ class ContaBancariaController extends Controller
     {
         $request->validate([
             'banco_id' => 'required|exists:bancos,id',
+            'descricao' => 'nullable|string|max:255',
             'agencia' => 'nullable|string|max:255',
             'conta' => 'nullable|string|max:255',
             'tipochave_id' => 'nullable|exists:tipos_chaves,id',
@@ -79,6 +80,7 @@ class ContaBancariaController extends Controller
     {
         $request->validate([
             'banco_id' => 'required|exists:bancos,id',
+            'descricao' => 'nullable|string|max:255',
             'agencia' => 'nullable|string|max:255',
             'conta' => 'nullable|string|max:255',
             'tipochave_id' => 'nullable|exists:tipos_chaves,id',

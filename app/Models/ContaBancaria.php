@@ -16,6 +16,7 @@ class ContaBancaria extends Model
     protected $fillable = [
         'user_id',
         'banco_id',
+        'descricao',
         'agencia',
         'conta',
         'tipochave_id',

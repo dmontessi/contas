@@ -26,8 +26,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Agência</label>
-                                <input class="form-control" type="text" name="agencia" value="{{ $contabancaria->agencia }}" required>
+                                <label>Descrição</label>
+                                <input class="form-control" type="text" name="descricao" value="{{ $contabancaria->descricao }}" required>
                             </div>
                         </div>
                     </div>
@@ -35,10 +35,19 @@
                     <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Agência</label>
+                                <input class="form-control" type="text" name="agencia" value="{{ $contabancaria->agencia }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Conta</label>
                                 <input class="form-control" type="text" name="conta" value="{{ $contabancaria->conta }}" required>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tipo de Chave</label>
@@ -52,9 +61,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Chave PIX</label>

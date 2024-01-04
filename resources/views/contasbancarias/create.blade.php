@@ -23,8 +23,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Agência</label>
-                                <input class="form-control" type="text" name="agencia" required>
+                                <label>Descrição</label>
+                                <input class="form-control" type="text" name="descricao" required>
                             </div>
                         </div>
                     </div>
@@ -32,10 +32,19 @@
                     <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Agência</label>
+                                <input class="form-control" type="text" name="agencia" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Conta</label>
                                 <input class="form-control" type="text" name="conta" required>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tipo de Chave</label>
@@ -47,9 +56,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row py-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Chave PIX</label>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('banco_id')->constrained('bancos')->onDelete('cascade');
+            $table->string('descricao')->nullable();
             $table->string('agencia')->nullable();
             $table->string('conta')->nullable();
             $table->unsignedBigInteger('tipochave_id')->nullable();
