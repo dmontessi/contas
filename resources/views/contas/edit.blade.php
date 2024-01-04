@@ -18,7 +18,7 @@
                                     <option selected value disabled>Selecione</option>
                                     @foreach($devedores as $devedor)
                                     <option value="{{ $devedor->id }}" {{ $conta->devedor_id == $devedor->id ? 'selected' : '' }}>
-                                        {{ $devedor->nome }}
+                                        {{ $devedor->apelido }}
                                     </option>
                                     @endforeach
                                 </select>
@@ -31,7 +31,7 @@
                                     <option selected value disabled>Selecione</option>
                                     @foreach($fornecedores as $fornecedor)
                                     <option value="{{ $fornecedor->id }}" {{ $conta->fornecedor_id == $fornecedor->id ? 'selected' : '' }}>
-                                        {{ $fornecedor->nome }}
+                                        {{ $fornecedor->apelido }}
                                     </option>
                                     @endforeach
                                 </select>

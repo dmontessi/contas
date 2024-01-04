@@ -23,8 +23,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Descrição</label>
-                                <input class="form-control" type="text" name="descricao" required>
+                                <label>Devedor</label>
+                                <select class="form-control" name="devedor_id">
+                                    <option selected value disabled>Selecione</option>
+                                    @foreach($devedores as $devedor)
+                                    <option value="{{ $devedor->id }}">{{ $devedor->apelido }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

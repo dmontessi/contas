@@ -16,7 +16,7 @@ class ContaBancaria extends Model
     protected $fillable = [
         'user_id',
         'banco_id',
-        'descricao',
+        'devedor_id',
         'agencia',
         'conta',
         'tipochave_id',
@@ -36,6 +36,11 @@ class ContaBancaria extends Model
     public function banco()
     {
         return $this->belongsTo(Banco::class);
+    }
+
+    public function devedor()
+    {
+        return $this->belongsTo(Devedor::class);
     }
 
     public function tipoChave()

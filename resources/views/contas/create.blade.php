@@ -16,7 +16,7 @@
                                 <select class="form-control" name="devedor_id" required>
                                     <option selected value disabled>Selecione</option>
                                     @foreach($devedores as $devedor)
-                                        <option value="{{ $devedor->id }}">{{ $devedor->nome }}</option>
+                                        <option value="{{ $devedor->id }}">{{ $devedor->apelido }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -27,7 +27,7 @@
                                 <select class="form-control" name="fornecedor_id" required>
                                     <option selected value disabled>Selecione</option>
                                     @foreach($fornecedores as $fornecedor)
-                                        <option value="{{ $fornecedor->id }}">{{ $fornecedor->nome }}</option>
+                                        <option value="{{ $fornecedor->id }}">{{ $fornecedor->apelido }}</option>
                                     @endforeach
                                 </select>
                             </div>

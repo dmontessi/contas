@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banco;
+use App\Models\Devedor;
 use App\Models\TipoChave;
 use App\Models\ContaBancaria;
 use Illuminate\Http\Request;
@@ -37,14 +38,15 @@ class ContaBancariaController extends Controller
     {
         $bancos = Banco::all();
         $tiposchaves = TipoChave::all();
-        return view('contasbancarias.create', compact('bancos', 'tiposchaves'));
+        $devedores = Devedor::where('user_id', auth()->id())->get();
+        return view('contasbancarias.create', compact('bancos', 'tiposchaves', 'devedores'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'banco_id' => 'required|exists:bancos,id',
-            'descricao' => 'nullable|string|max:255',
+            'devedor_id' => 'nullable|exists:devedores,id',
             'agencia' => 'nullable|string|max:255',
             'conta' => 'nullable|string|max:255',
             'tipochave_id' => 'nullable|exists:tipos_chaves,id',
@@ -73,14 +75,15 @@ class ContaBancariaController extends Controller
 
         $bancos = Banco::all();
         $tiposchaves = TipoChave::all();
-        return view('contasbancarias.edit', compact('contabancaria', 'bancos', 'tiposchaves'));
+        $devedores = Devedor::where('user_id', auth()->id())->get();
+        return view('contasbancarias.edit', compact('contabancaria', 'bancos', 'tiposchaves', 'devedores'));
     }
 
     public function update(Request $request, ContaBancaria $contabancaria)
     {
         $request->validate([
             'banco_id' => 'required|exists:bancos,id',
-            'descricao' => 'nullable|string|max:255',
+            'devedor_id' => 'nullable|exists:devedores,id',
             'agencia' => 'nullable|string|max:255',
             'conta' => 'nullable|string|max:255',
             'tipochave_id' => 'nullable|exists:tipos_chaves,id',
