@@ -9,7 +9,23 @@ $contador = $contas_vencendo->count();
 <div class="d-flex flex-column my-4">
 
     <div class="d-flex justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="card p-2 mx-2 text-bg-danger">
+                <div class="d-flex justify-content-between align-items-center px-2">
+                    <span class="fs-5 fw-bold">
+                        <i class="bi bi-exclamation-octagon me-1"></i>Vencendo
+                    </span>
+                    <small class="fw-light">Hoje</small>
+                </div>
+
+                <hr class="my-1">
+
+                <div class="d-flex justify-content-center">
+                    <span class="fs-3 fw-bold">{{ number_format($contas_vencendo->sum('valor'), 2, ',', '.') }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="card p-2 mx-2 text-bg-success">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-5 fw-bold">
@@ -25,8 +41,8 @@ $contador = $contas_vencendo->count();
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card p-2 mx-2 text-bg-danger">
+        <div class="col-md-3">
+            <div class="card p-2 mx-2 text-bg-warning">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-5 fw-bold">
                         <i class="bi bi-exclamation-triangle me-1"></i>Em aberto
@@ -41,7 +57,7 @@ $contador = $contas_vencendo->count();
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card p-2 mx-2 text-bg-primary">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-5 fw-bold">
