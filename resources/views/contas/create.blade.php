@@ -69,6 +69,17 @@
                         </div>
                     </div>
 
+                    <div class="row py-2">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="recorrente" id="recorrente">
+                                <label class="form-check-label" for="recorrente">
+                                    Essa é uma conta recorrente que incidirá todos os meses
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr class="my-3">
 
                     <div class="btn-group" role="group">

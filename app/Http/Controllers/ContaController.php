@@ -26,6 +26,7 @@ class ContaController extends Controller
             ->orderBy('vencimento', 'asc')
             ->orderBy('id', 'desc')
             ->where('user_id', auth()->id())
+            ->whereNull('data_pagamento')
             ->where(function ($query) use ($descricao) {
                 if ($descricao) {
                     $query->where('descricao', 'LIKE', "%$descricao%");
@@ -138,6 +139,33 @@ class ContaController extends Controller
             'comprovante' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
+        if ($request->has('data_pagamento')) {
+
+            $proximo_vencimento = Carbon::parse($conta->vencimento)->addMonth();
+
+            $proxima_conta = Conta::where('fornecedor_id', $conta->fornecedor_id)
+                ->where('devedor_id', $conta->devedor_id)
+                ->where('descricao', $conta->descricao)
+                ->where('vencimento', $proximo_vencimento)
+                ->where('valor', $conta->valor)
+                ->first();
+
+            if (!$proxima_conta) {
+                $prox_conta = $conta->replicate();
+                unset($prox_conta['cobranca']);
+                unset($prox_conta['valor_pago']);
+                unset($prox_conta['data_pagamento']);
+                unset($prox_conta['formapagamento_id']);
+                unset($prox_conta['contabancaria_pagamento_id']);
+                unset($prox_conta['comprovante']);
+                $prox_conta->vencimento = Carbon::parse($conta->vencimento)->addMonth();
+                $prox_conta->created_at = now();
+                $prox_conta->updated_at = null;
+                $prox_conta->save();
+            }
+        }
+
+        $request->merge(['recorrente' => $request->input('recorrente', 0)]);
         $conta->update($request->except('cobranca', 'comprovante'));
 
         if ($request->hasFile('cobranca')) {

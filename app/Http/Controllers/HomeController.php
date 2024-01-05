@@ -22,6 +22,7 @@ class HomeController extends Controller
             ->orderBy('vencimento', 'asc')
             ->orderBy('id', 'desc')
             ->where('user_id', auth()->id())
+            ->whereNull('data_pagamento')
             ->whereDate('vencimento', Carbon::today()->toDateString())->get();
 
         $abertos = Conta::whereNull('data_pagamento')

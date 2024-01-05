@@ -25,7 +25,8 @@ class Conta extends Model
         'valor_pago',
         'formapagamento_id',
         'contabancaria_pagamento_id',
-        'comprovante'
+        'comprovante',
+        'recorrente'
     ];
 
     protected $casts = [
@@ -35,6 +36,7 @@ class Conta extends Model
         'devedor_id' => 'integer',
         'valor' => 'decimal:2',
         'valor_pago' => 'decimal:2',
+        'recorrente' => 'boolean',
     ];
 
     public function user()

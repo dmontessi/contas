@@ -16,13 +16,13 @@ $extensao = strtolower(pathinfo($conta->cobranca, PATHINFO_EXTENSION));
         <div class="card flex-grow-1">
 
             @if ($extensao == 'pdf')
-                <div style="height: 80vh;">
-                    <embed src="{{ asset($conta->cobranca) }}" type="application/pdf" width="100%" height="100%">
-                </div>
+            <div style="height: 80vh;">
+                <embed src="{{ asset($conta->cobranca) }}" type="application/pdf" width="100%" height="100%">
+            </div>
             @elseif (in_array($extensao, ['png', 'gif', 'jpg', 'bmp', 'jpeg']))
-                <div style="height: 80vh; overflow: auto;">
-                    <img src="{{ asset($conta->cobranca) }}" alt="Cobrança Imagem" style="width: 100%; height: auto;">
-                </div>
+            <div style="height: 80vh; overflow: auto;">
+                <img src="{{ asset($conta->cobranca) }}" alt="Cobrança Imagem" style="width: 100%; height: auto;">
+            </div>
             @endif
 
         </div>
@@ -90,6 +90,16 @@ $extensao = strtolower(pathinfo($conta->cobranca, PATHINFO_EXTENSION));
                                 <a class="btn btn-warning" href="{{ asset($conta->comprovante) }}" target="_blank">Ver Comprovante</a>
                                 @endif
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="recorrente" id="recorrente" {{ $conta->recorrente ? 'checked' : '' }}>
+                            <label class="form-check-label" for="recorrente">
+                                Essa é uma conta recorrente que incidirá todos os meses
+                            </label>
                         </div>
                     </div>
                 </div>

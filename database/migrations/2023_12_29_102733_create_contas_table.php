@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('contabancaria_pagamento_id')->nullable();
             $table->foreign('contabancaria_pagamento_id')->references('id')->on('contas_bancarias')->onDelete('cascade');
             $table->string('comprovante')->nullable();
+            $table->boolean('recorrente')->default(FALSE);
             $table->timestamps();
         });
     }
