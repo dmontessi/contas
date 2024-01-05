@@ -85,14 +85,20 @@ $contador = $contas_vencendo->count();
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="30%">Descrição</th>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="40%">Fornecedor</th>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="30%">Valor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Descrição</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Fornecedor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($contas_vencendo as $conta)
                     <tr>
+                        <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                            <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
+                                {{ $conta->devedor->apelido }}
+                            </a>
+                        </td>
                         <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->descricao }}
