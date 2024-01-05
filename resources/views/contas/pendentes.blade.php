@@ -12,6 +12,7 @@
                 <div class="form-group">
                     <label class="pb-1">Buscar:</label>
                     <form action="{{ route('contas.pendentes') }}" method="GET" autocomplete="off">
+                        <input class="form-control mb-2" type="month" name="mes" value="{{ Request::input('mes') ?? now()->format('Y-m') }}" placeholder="Mês">
                         <input class="form-control mb-2" type="text" name="descricao" value="{{ Request::input('descricao') ?? null }}" placeholder="Descrição">
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-search"></i> Buscar
