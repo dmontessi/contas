@@ -3,19 +3,38 @@
 @section('content')
 
 @php
-$contador = $contas_vencendo->count();
+$contador = $vencidas_vencendo->count();
 @endphp
 
 <div class="d-flex flex-column my-4">
 
-    <div class="d-flex justify-content-center">
-        <div class="col-md-3">
-            <div class="card p-2 mx-2 text-bg-danger">
+    <div class="d-flex justify-content-center row">
+        @if($contas_vencidas->count() > 0)
+            <div class="col-md-2">
+                <div class="card p-2 mb-2 text-bg-dark">
+                    <div class="d-flex justify-content-between align-items-center px-2">
+                        <span class="fs-6 fw-bold">
+                            🚨 Vencidas
+                        </span>
+                        <small class="fw-light"></small>
+                    </div>
+
+                    <hr class="my-1">
+
+                    <div class="d-flex justify-content-center">
+                        <span class="fs-3 fw-bold">{{ number_format($contas_vencidas->sum('valor'), 2, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+            <div class="card p-2 mb-2 text-bg-danger">
                 <div class="d-flex justify-content-between align-items-center px-2">
-                    <span class="fs-5 fw-bold">
-                        <i class="bi bi-exclamation-octagon me-1"></i>Vencendo
+                    <span class="fs-6 fw-bold">
+                        ⚠️ Vencendo
                     </span>
-                    <small class="fw-light">Hoje</small>
+                    <small class="fw-light"></small>
                 </div>
 
                 <hr class="my-1">
@@ -25,13 +44,14 @@ $contador = $contas_vencendo->count();
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-2 mx-2 text-bg-success">
+
+        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+            <div class="card p-2 mb-2 text-bg-success">
                 <div class="d-flex justify-content-between align-items-center px-2">
-                    <span class="fs-5 fw-bold">
-                        <i class="bi bi-check-circle me-1"></i>Pagos
+                    <span class="fs-6 fw-bold">
+                        ✅ Pagos
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM [de] YYYY')) }}</small>
+                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
                 </div>
 
                 <hr class="my-1">
@@ -41,13 +61,14 @@ $contador = $contas_vencendo->count();
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-2 mx-2 text-bg-warning">
+
+        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+            <div class="card p-2 mb-2 text-bg-warning">
                 <div class="d-flex justify-content-between align-items-center px-2">
-                    <span class="fs-5 fw-bold">
-                        <i class="bi bi-exclamation-triangle me-1"></i>Em aberto
+                    <span class="fs-6 fw-bold">
+                        📢 Aberto
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM [de] YYYY')) }}</small>
+                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
                 </div>
 
                 <hr class="my-1">
@@ -57,13 +78,14 @@ $contador = $contas_vencendo->count();
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-2 mx-2 text-bg-primary">
+
+        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+            <div class="card p-2 mb-2 text-bg-primary">
                 <div class="d-flex justify-content-between align-items-center px-2">
-                    <span class="fs-5 fw-bold">
-                        <i class="bi bi-clipboard-data me-1"></i>Total
+                    <span class="fs-6 fw-bold">
+                        📊 Total
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM [de] YYYY')) }}</small>
+                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
                 </div>
 
                 <hr class="my-1">
@@ -75,14 +97,14 @@ $contador = $contas_vencendo->count();
         </div>
     </div>
 
-    <div class="d-flex justify-content-center mt-4">
+    <div class="d-flex justify-content-center mt-4 row">
         <div class="col-md-6">
-            <div class="card p-3 mx-1">
+            <div class="card p-3 mx-1 mb-2">
                 <canvas id="grafico1"></canvas>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card p-3 mx-1">
+            <div class="card p-3 mx-1 mb-2">
                 <canvas id="grafico2"></canvas>
             </div>
         </div>
@@ -92,7 +114,7 @@ $contador = $contas_vencendo->count();
     <div class="d-flex justify-content-center mt-4">
         <small class="d-inline-flex px-2 py-1 fw-semibold text-danger bg-danger-subtle border border-danger-subtle rounded-2">
             <i class="bi bi-exclamation-triangle me-1"></i>
-            <span>Você possui contas vencendo hoje! 💸</span>
+            <span>Você possui contas @if($contas_vencidas->count() > 0) vencidas @endif @if($contas_vencidas->count() > 0 && $vencendo) e @endif @if($vencendo) vencendo {{ $vencendo }}@endif 💸</span>
         </small>
     </div>
 
@@ -101,31 +123,37 @@ $contador = $contas_vencendo->count();
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Devedor</th>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Descrição</th>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Fornecedor</th>
-                        <th class="text-center align-middle m-0 py-0 px-1" width="25%">Valor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="20%">Descrição</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="20%">Fornecedor</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="20%">Vencimento</th>
+                        <th class="text-center align-middle m-0 py-0 px-1" width="20%">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contas_vencendo as $conta)
+                    @foreach ($vencidas_vencendo as $conta)
                     <tr>
-                        <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                        <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->devedor->apelido }}
                             </a>
                         </td>
-                        <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                        <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->descricao }}
                             </a>
                         </td>
-                        <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                        <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->fornecedor->apelido }}
                             </a>
                         </td>
-                        <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                        <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
+                            <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
+                                {{ date('d/m/Y', strtotime($conta->vencimento)) }}
+                            </a>
+                        </td>
+                        <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ number_format($conta->valor, 2, ',', '.') }}
                             </a>

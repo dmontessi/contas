@@ -22,6 +22,7 @@ Route::resource('fornecedores', App\Http\Controllers\FornecedorController::class
 Route::resource('devedores', App\Http\Controllers\DevedorController::class)
     ->parameters(['devedores' => 'devedor']);
 
+Route::put('/contas/{conta}/paycancel', [App\Http\Controllers\ContaController::class, 'paycancel'])->name('contas.paycancel');
 Route::get('contas/{conta}/pay', [App\Http\Controllers\ContaController::class, 'pay'])->name('contas.pay');
 Route::get('/contas/pagas', [App\Http\Controllers\ContaController::class, 'pagas'])->name('contas.pagas');
 Route::get('/contas/pendentes', [App\Http\Controllers\ContaController::class, 'pendentes'])->name('contas.pendentes');

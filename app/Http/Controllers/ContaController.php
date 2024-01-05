@@ -168,7 +168,7 @@ class ContaController extends Controller
             $conta->save();
         }
 
-        return redirect()->route('contas.index');
+        return redirect()->route('contas.pendentes');
     }
 
     public function show(Conta $conta)
@@ -321,7 +321,23 @@ class ContaController extends Controller
             $conta->save();
         }
 
-        return redirect()->route('contas.index');
+        return redirect()->route('contas.pendentes');
+    }
+
+    public function paycancel(Request $request, Conta $conta)
+    {
+        $request->merge([
+            'valor_pago' => 0,
+            'data_pagamento' => null,
+            'formapagamento_id' => null,
+            'contabancaria_pagamento_id' => null,
+            'comprovante' => null,
+            'observacao' => null,
+            'anexo' => null,
+        ]);
+
+        $conta->update($request->all());
+        return redirect()->route('contas.pagas');
     }
 
     public function destroy(Conta $conta)
@@ -331,6 +347,6 @@ class ContaController extends Controller
         }
         
         $conta->delete();
-        return redirect()->route('contas.index');
+        return redirect()->route('contas.pendentes');
     }
 }

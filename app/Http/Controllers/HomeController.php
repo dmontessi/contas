@@ -18,12 +18,70 @@ class HomeController extends Controller
 
     public function index()
     {
-        $contas_vencendo = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
-            ->orderBy('vencimento', 'asc')
-            ->orderBy('id', 'desc')
-            ->where('user_id', auth()->id())
+        $hoje = Carbon::today();
+        $diaDaSemana = $hoje->dayOfWeek;
+
+        if ($diaDaSemana === Carbon::FRIDAY) {
+            $contas_vencendo = Conta::orderBy('vencimento', 'asc')
+                ->whereNull('data_pagamento')
+                ->where('user_id', auth()->id())
+                ->where(function ($query) use ($hoje) {
+                    $query->whereDate('vencimento', $hoje);
+                    $query->orWhere(function ($query) use ($hoje) {
+                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SATURDAY));
+                    });
+                    $query->orWhere(function ($query) use ($hoje) {
+                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
+                    });
+                })
+                ->get();
+        } else {
+            $contas_vencendo = Conta::orderBy('vencimento', 'asc')
+                ->whereNull('data_pagamento')
+                ->whereDate('vencimento', $hoje)
+                ->where('user_id', auth()->id())
+                ->get();
+        }
+
+        $contas_vencidas = Conta::orderBy('vencimento', 'asc')
             ->whereNull('data_pagamento')
-            ->whereDate('vencimento', Carbon::today()->toDateString())->get();
+            ->whereDate('vencimento', '<', $hoje)
+            ->where('user_id', auth()->id())
+            ->get();
+
+        $vencendo_hoje = $contas_vencendo->contains(function ($conta) use ($hoje) {
+            return Carbon::parse($conta->vencimento)->toDateString() === $hoje->toDateString();
+        });
+
+        $vencendo_sabado = $contas_vencendo->contains(function ($conta) {
+            return Carbon::parse($conta->vencimento)->dayOfWeek === Carbon::SATURDAY;
+        });
+
+        $vencendo_domingo = $contas_vencendo->contains(function ($conta) {
+            return Carbon::parse($conta->vencimento)->dayOfWeek === Carbon::SUNDAY;
+        });
+
+        $vencendo = '';
+
+        if ($vencendo_hoje) {
+            $vencendo .= 'hoje';
+        }
+
+        if ($vencendo_sabado) {
+            if ($vencendo !== '') {
+                $vencendo .= $vencendo_domingo ? ', ' : ' e ';
+            }
+            $vencendo .= 'sábado';
+        }
+
+        if ($vencendo_domingo) {
+            if ($vencendo !== '') {
+                $vencendo .= ' e ';
+            }
+            $vencendo .= 'domingo';
+        }
+
+        $vencidas_vencendo = $contas_vencidas->merge($contas_vencendo);
 
         $abertos = Conta::whereNull('data_pagamento')
             ->whereYear('vencimento', Carbon::today()->format('Y'))
@@ -81,6 +139,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('contas_vencendo', 'pagos', 'abertos', 'total', 'grafico1', 'grafico2'));
+        return view('home', compact('vencidas_vencendo', 'contas_vencidas', 'contas_vencendo', 'vencendo', 'pagos', 'abertos', 'total', 'grafico1', 'grafico2'));
     }
 }

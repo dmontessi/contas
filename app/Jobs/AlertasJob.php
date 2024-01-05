@@ -36,11 +36,33 @@ class AlertasJob implements ShouldQueue, ShouldBeUnique
     {
         $telegramService = new TelegramService();
 
-        $contas = Conta::whereDate('vencimento', Carbon::today()->toDateString())->get();
+        $hoje = Carbon::today();
+        $diaDaSemana = $hoje->dayOfWeek;
+
+        if ($diaDaSemana === Carbon::FRIDAY) {
+            $contas = Conta::orderBy('vencimento', 'asc')
+                ->whereNull('data_pagamento')
+                ->where(function ($query) use ($hoje) {
+                    $query->whereDate('vencimento', $hoje);
+                    $query->orWhere(function ($query) use ($hoje) {
+                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SATURDAY));
+                    });
+                    $query->orWhere(function ($query) use ($hoje) {
+                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
+                    });
+                })
+                ->get();
+        } else {
+            $contas = Conta::orderBy('vencimento', 'asc')
+                ->whereNull('data_pagamento')
+                ->whereDate('vencimento', $hoje)
+                ->get();
+        }
+
         if ($contas->count() > 0) {
             foreach ($contas as $conta) {
                 $message = '👤 ' . '<strong>' . $conta->devedor->apelido . '</strong>' . "\n" .
-                    '➡️ ' . '<strong>' . $conta->descricao . '</strong>' . ' de ' . $conta->fornecedor->apelido . ' vencendo' . "\n" .
+                    '➡️ ' . '<strong>' . $conta->descricao . '</strong>' . ' de ' . $conta->fornecedor->apelido . ' vencendo ' . Carbon::parse($conta->vencimento)->isoFormat('dddd, DD [de] MMMM [de] YYYY') . "\n" .
                     '💰 ' . '<strong>Valor</strong> R$ ' . number_format($conta->valor, 2, ',', '.');
 
                 if ($conta->cobranca) {

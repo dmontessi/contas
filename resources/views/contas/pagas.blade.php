@@ -88,10 +88,10 @@
                                                 <a href="{{ route('contas.edit', $conta->id) }}" class="dropdown-item py-0">Editar</a>
                                             </li>
                                             <li>
-                                                <form action="{{ route('contas.destroy', $conta->id) }}" method="POST">
-                                                    <input type="hidden" name="_method" value="DELETE">
+                                                <form action="{{ route('contas.paycancel', $conta->id) }}" method="POST">
                                                     @csrf
-                                                    <a href="#" class="dropdown-item py-0" onclick="this.parentNode.submit(); return false;">Excluir</a>
+                                                    @method('PUT')
+                                                    <a href="#" class="dropdown-item py-0" onclick="this.parentNode.submit(); return false;">Cancelar Pagamento</a>
                                                 </form>
                                             </li>
                                         </ul>
