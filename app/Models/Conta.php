@@ -63,7 +63,7 @@ class Conta extends Model
 
     public function conta_pagamento()
     {
-        return $this->belongsTo(ContaBancaria::class);
+        return $this->belongsTo(ContaBancaria::class, 'contabancaria_pagamento_id', 'id');
     }
 
     public static function boot() {

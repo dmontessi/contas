@@ -35,11 +35,12 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Fornecedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Descrição</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="20%">Devedor</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Vencimento</th>
-                                <th class="text-center align-middle m-0 py-0 px-1" width="15%">Valor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="16%">Fornecedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="18%">Descrição</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="16%">Devedor</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">Pagamento</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="10%">Valor Pago</th>
+                                <th class="text-center align-middle m-0 py-0 px-1" width="25%">Conta</th>
                                 <th class="text-center align-middle m-0 py-0 px-1" width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -64,12 +65,17 @@
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
-                                        {{ date('d/m/Y', strtotime($conta->vencimento)) }}
+                                        {{ date('d/m/Y', strtotime($conta->data_pagamento)) }}
                                     {{-- </a> --}}
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
-                                        {{ number_format($conta->valor, 2, ',', '.') }}
+                                        {{ number_format($conta->valor_pago, 2, ',', '.') }}
+                                    {{-- </a> --}}
+                                </td>
+                                <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
+                                    {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
+                                        {{ $conta->conta_pagamento->devedor->apelido }} | {{ $conta->conta_pagamento->banco->nome }}
                                     {{-- </a> --}}
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
