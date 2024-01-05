@@ -94,17 +94,17 @@ $contador = $contas_vencendo->count();
                     @foreach ($contas_vencendo as $conta)
                     <tr>
                         <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
-                            <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
+                            <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->descricao }}
                             </a>
                         </td>
                         <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
-                            <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
+                            <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ $conta->fornecedor->apelido }}
                             </a>
                         </td>
                         <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
-                            <a href="{{ route('contas.edit', $conta->id) }}" class="list-group-item list-group-item-action">
+                            <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">
                                 {{ number_format($conta->valor, 2, ',', '.') }}
                             </a>
                         </td>
