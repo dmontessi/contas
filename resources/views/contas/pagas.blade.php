@@ -50,7 +50,7 @@
                             <tr>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
-                                        {{ $conta->fornecedor->apelido }}
+                                        @if($conta->fornecedor) {{ $conta->fornecedor->apelido }} @endif
                                     {{-- </a> --}}
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
@@ -60,7 +60,7 @@
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
-                                        {{ $conta->devedor->apelido }}
+                                        @if($conta->devedor) {{ $conta->devedor->apelido }} @endif
                                     {{-- </a> --}}
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
@@ -75,7 +75,7 @@
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
                                     {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
-                                        {{ $conta->conta_pagamento->devedor->apelido }} | {{ $conta->conta_pagamento->banco->nome }}
+                                        @if($conta->conta_pagamento) {{ $conta->conta_pagamento->devedor->apelido }} | {{ $conta->conta_pagamento->banco->nome }} @endif
                                     {{-- </a> --}}
                                 </td>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">

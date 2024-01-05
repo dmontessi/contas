@@ -224,8 +224,7 @@ class ContaController extends Controller
             'anexo' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
-        if ($request->has('data_pagamento')) {
-
+        if ($request->input('data_pagamento', null) && $request->input('recorrente', null)) {
             $proximo_vencimento = Carbon::parse($conta->vencimento)->addMonth();
 
             $proxima_conta = Conta::where('fornecedor_id', $conta->fornecedor_id)
