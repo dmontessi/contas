@@ -73,7 +73,7 @@ $extensao = strtolower(pathinfo($conta->cobranca, PATHINFO_EXTENSION));
                                 <option selected value disabled>Selecione</option>
                                 @foreach($contaspagamentos as $contapagamento)
                                 <option value="{{ $contapagamento->id }}" {{ $conta->contabancaria_pagamento_id == $contapagamento->id ? 'selected' : '' }}>
-                                    {{ $contapagamento->banco->nome }} | {{ $contapagamento->agencia }} | {{ $contapagamento->conta }}
+                                    {{ $contapagamento->devedor->apelido }} | {{ $contapagamento->banco->nome }} | {{ $contapagamento->agencia }} | {{ $contapagamento->conta }}
                                 </option>
                                 @endforeach
                             </select>
