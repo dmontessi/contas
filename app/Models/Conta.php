@@ -26,7 +26,9 @@ class Conta extends Model
         'formapagamento_id',
         'contabancaria_pagamento_id',
         'comprovante',
-        'recorrente'
+        'recorrente',
+        'observacao',
+        'anexo',
     ];
 
     protected $casts = [

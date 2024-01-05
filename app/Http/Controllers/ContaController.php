@@ -105,6 +105,8 @@ class ContaController extends Controller
             'formapagamento_id' => 'nullable|exists:formas_pagamentos,id',
             'contabancaria_pagamento_id' => 'nullable|exists:contas_bancarias,id',
             'comprovante' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'observacao' => 'nullable|string',
+            'anexo' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
         $conta = Conta::create($request->except('cobranca'));
@@ -128,6 +130,50 @@ class ContaController extends Controller
             $request->file('cobranca')->move($path, $fileName);
 
             $conta->cobranca = 'arquivos/cobrancas/' . $fileName;
+            $conta->save();
+        }
+
+        if ($request->hasFile('comprovante')) {
+
+            if ($conta->comprovante) {
+                $oldFilePath = public_path($conta->comprovante);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            $path = public_path('arquivos/comprovantes');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $fileName = 'comprovante_' . $conta->id . '_' . now()->format('Ymd_His') . '.' . $request->file('comprovante')->getClientOriginalExtension();
+
+            $request->file('comprovante')->move($path, $fileName);
+
+            $conta->comprovante = 'arquivos/comprovantes/' . $fileName;
+            $conta->save();
+        }
+
+        if ($request->hasFile('anexo')) {
+
+            if ($conta->anexo) {
+                $oldFilePath = public_path($conta->anexo);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            $path = public_path('arquivos/anexos');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $fileName = 'anexo_' . $conta->id . '_' . now()->format('Ymd_His') . '.' . $request->file('anexo')->getClientOriginalExtension();
+
+            $request->file('anexo')->move($path, $fileName);
+
+            $conta->anexo = 'arquivos/anexos/' . $fileName;
             $conta->save();
         }
 
@@ -183,6 +229,8 @@ class ContaController extends Controller
             'formapagamento_id' => 'nullable|exists:formas_pagamentos,id',
             'contabancaria_pagamento_id' => 'nullable|exists:contas_bancarias,id',
             'comprovante' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'observacao' => 'nullable|string',
+            'anexo' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
         if ($request->has('data_pagamento')) {
@@ -204,6 +252,8 @@ class ContaController extends Controller
                 unset($prox_conta['formapagamento_id']);
                 unset($prox_conta['contabancaria_pagamento_id']);
                 unset($prox_conta['comprovante']);
+                unset($prox_conta['observacao']);
+                unset($prox_conta['anexo']);
                 $prox_conta->vencimento = Carbon::parse($conta->vencimento)->addMonth();
                 $prox_conta->created_at = now();
                 $prox_conta->updated_at = null;
@@ -255,6 +305,28 @@ class ContaController extends Controller
             $request->file('comprovante')->move($path, $fileName);
 
             $conta->comprovante = 'arquivos/comprovantes/' . $fileName;
+            $conta->save();
+        }
+
+        if ($request->hasFile('anexo')) {
+
+            if ($conta->anexo) {
+                $oldFilePath = public_path($conta->anexo);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            $path = public_path('arquivos/anexos');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $fileName = 'anexo_' . $conta->id . '_' . now()->format('Ymd_His') . '.' . $request->file('anexo')->getClientOriginalExtension();
+
+            $request->file('anexo')->move($path, $fileName);
+
+            $conta->anexo = 'arquivos/anexos/' . $fileName;
             $conta->save();
         }
 

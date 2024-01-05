@@ -30,6 +30,8 @@ return new class extends Migration
             $table->foreign('contabancaria_pagamento_id')->references('id')->on('contas_bancarias')->onDelete('cascade');
             $table->string('comprovante')->nullable();
             $table->boolean('recorrente')->default(FALSE);
+            $table->string('observacao')->nullable();
+            $table->string('anexo')->nullable();
             $table->timestamps();
         });
     }

@@ -10,7 +10,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="row py-2">
+                    <div class="row my-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Devedor</label>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="row py-2">
+                    <div class="row my-2">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Descrição</label>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="row py-2">
+                    <div class="row my-2">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Cobrança</label>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="row py-2">
+                    <div class="row my-2">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Valor</label>
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="card bg-warning-subtle border-warning-subtle my-2 py-2 px-3">
-                        <div class="row py-2">
+                        <div class="row my-2">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Valor Pago</label>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row my-2">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Forma de Pagamento</label>
@@ -121,9 +121,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row py-2">
-                            <div class="col-md-12">
+                        <div class="row my-2">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Comprovante</label>
                                     <div class="input-group">
@@ -134,16 +133,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Anexo</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="file" name="anexo" accept="image/*,application/pdf">
+                                        @if ($conta->anexo)
+                                        <a class="btn btn-warning" href="{{ asset($conta->anexo) }}" target="_blank">Ver Anexo</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row py-2">
-                        <div class="col-md-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" name="recorrente" id="recorrente" {{ $conta->recorrente ? 'checked' : '' }}>
-                                <label class="form-check-label" for="recorrente">
-                                    Essa é uma conta recorrente que incidirá todos os meses
-                                </label>
+                        <div class="row my-2">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Observação</label>
+                                    <textarea class="form-control" name="observacao" maxlength="255" rows="2">{{ $conta->observacao }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" name="recorrente" id="recorrente" {{ $conta->recorrente ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="recorrente">
+                                        Essa é uma conta recorrente que incidirá todos os meses
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
