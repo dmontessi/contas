@@ -38,6 +38,52 @@ class ContaController extends Controller
         return view('contas.index', compact('contas'));
     }
 
+    public function pendentes(Request $request)
+    {
+        $descricao = $request->input('descricao');
+
+        $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
+            ->orderBy('vencimento', 'asc')
+            ->orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
+            ->whereNull('data_pagamento')
+            ->where(function ($query) use ($descricao) {
+                if ($descricao) {
+                    $query->where('descricao', 'LIKE', "%$descricao%");
+                }
+            })->paginate(100);
+
+        $contas->appends(['descricao' => $descricao]);
+
+        return view('contas.pendentes', compact('contas'));
+    }
+
+    public function pagas(Request $request)
+    {
+        $descricao = $request->input('descricao');
+        $mes = $request->input('mes') ? Carbon::parse($request->input('mes') . '-01') : now();
+
+        $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
+            ->orderBy('vencimento', 'asc')
+            ->orderBy('id', 'desc')
+            ->where('user_id', auth()->id())
+            ->whereNotNull('data_pagamento')
+            ->where(function ($query) use ($mes) {
+                if ($mes) {
+                    $query->whereMonth('vencimento', $mes->format('m'))->whereYear('vencimento', $mes->format('Y'));
+                }
+            })
+            ->where(function ($query) use ($descricao) {
+                if ($descricao) {
+                    $query->where('descricao', 'LIKE', "%$descricao%");
+                }
+            })->paginate(100);
+
+        $contas->appends(['descricao' => $descricao, 'mes' => $mes]);
+
+        return view('contas.pagas', compact('contas'));
+    }
+
     public function create()
     {
         $devedores = Devedor::all();

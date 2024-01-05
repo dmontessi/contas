@@ -67,8 +67,13 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contas.index') }}">
-                                Contas
+                            <a class="nav-link" href="{{ route('contas.pendentes') }}">
+                                Contas Pendentes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contas.pagas') }}">
+                                Contas Pagas
                             </a>
                         </li>
                     </ul>

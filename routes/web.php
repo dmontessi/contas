@@ -22,10 +22,12 @@ Route::resource('fornecedores', App\Http\Controllers\FornecedorController::class
 Route::resource('devedores', App\Http\Controllers\DevedorController::class)
     ->parameters(['devedores' => 'devedor']);
 
+Route::get('contas/{conta}/pay', [App\Http\Controllers\ContaController::class, 'pay'])->name('contas.pay');
+Route::get('/contas/pagas', [App\Http\Controllers\ContaController::class, 'pagas'])->name('contas.pagas');
+Route::get('/contas/pendentes', [App\Http\Controllers\ContaController::class, 'pendentes'])->name('contas.pendentes');
+
 Route::resource('contas', App\Http\Controllers\ContaController::class)
     ->parameters(['contas' => 'conta']);
-
-Route::get('contas/{conta}/pay', [App\Http\Controllers\ContaController::class, 'pay'])->name('contas.pay');
 
 Route::resource('bancos', App\Http\Controllers\BancoController::class)
     ->parameters(['bancos' => 'banco']);
