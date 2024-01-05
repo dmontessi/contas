@@ -48,7 +48,7 @@
                             @foreach ($contas as $conta)
                             <tr>
                                 <td class="text-center align-middle m-0 py-0 px-1" style="color:{{$conta->devedor->cor}}">
-                                    {{-- {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}} --}}
+                                    {{-- <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action"> --}}
                                         {{ $conta->fornecedor->apelido }}
                                     {{-- </a> --}}
                                 </td>
