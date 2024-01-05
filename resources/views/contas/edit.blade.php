@@ -55,7 +55,7 @@
                                 <div class="input-group">
                                     <input class="form-control" type="file" name="cobranca" accept="image/*,application/pdf">
                                     @if ($conta->cobranca)
-                                        <a class="btn btn-warning" href="{{ asset($conta->cobranca) }}" target="_blank">Ver Cobrança</a>
+                                    <a class="btn btn-warning" href="{{ asset($conta->cobranca) }}" target="_blank">Ver Cobrança</a>
                                     @endif
                                 </div>
                             </div>
@@ -77,59 +77,61 @@
                         </div>
                     </div>
 
-                    <div class="row py-2">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Valor Pago</label>
-                                <input class="form-control" type="number" name="valor_pago" step="0.01" value="{{ $conta->valor_pago }}">
+                    <div class="card bg-warning-subtle border-warning-subtle my-2 py-2 px-3">
+                        <div class="row py-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Valor Pago</label>
+                                    <input class="form-control" type="number" name="valor_pago" step="0.01" value="{{ $conta->valor_pago }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Data de Pagamento</label>
+                                    <input class="form-control" type="date" name="data_pagamento" value="{{ $conta->data_pagamento }}">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Data de Pagamento</label>
-                                <input class="form-control" type="date" name="data_pagamento" value="{{ $conta->data_pagamento }}">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row py-2">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Forma de Pagamento</label>
-                                <select class="form-control" name="formapagamento_id">
-                                    <option selected value disabled>Selecione</option>
-                                    @foreach($formaspagamentos as $formapagamento)
-                                    <option value="{{ $formapagamento->id }}" {{ $conta->formapagamento_id == $formapagamento->id ? 'selected' : '' }}>
-                                        {{ $formapagamento->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
+                        <div class="row py-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Forma de Pagamento</label>
+                                    <select class="form-control" name="formapagamento_id">
+                                        <option selected value disabled>Selecione</option>
+                                        @foreach($formaspagamentos as $formapagamento)
+                                        <option value="{{ $formapagamento->id }}" {{ $conta->formapagamento_id == $formapagamento->id ? 'selected' : '' }}>
+                                            {{ $formapagamento->nome }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Conta de Pagamento</label>
+                                    <select class="form-control" name="contabancaria_pagamento_id">
+                                        <option selected value disabled>Selecione</option>
+                                        @foreach($contaspagamentos as $contapagamento)
+                                        <option value="{{ $contapagamento->id }}" {{ $conta->contabancaria_pagamento_id == $contapagamento->id ? 'selected' : '' }}>
+                                            {{ $contapagamento->banco->nome }} | {{ $contapagamento->agencia }} | {{ $contapagamento->conta }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Conta de Pagamento</label>
-                                <select class="form-control" name="contabancaria_pagamento_id">
-                                    <option selected value disabled>Selecione</option>
-                                    @foreach($contaspagamentos as $contapagamento)
-                                    <option value="{{ $contapagamento->id }}" {{ $conta->contabancaria_pagamento_id == $contapagamento->id ? 'selected' : '' }}>
-                                        {{ $contapagamento->banco->nome }} | {{ $contapagamento->agencia }} | {{ $contapagamento->conta }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row py-2">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Comprovante</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="file" name="comprovante" accept="image/*,application/pdf">
-                                    @if ($conta->comprovante)
+                        <div class="row py-2">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Comprovante</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="file" name="comprovante" accept="image/*,application/pdf">
+                                        @if ($conta->comprovante)
                                         <a class="btn btn-warning" href="{{ asset($conta->comprovante) }}" target="_blank">Ver Comprovante</a>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>

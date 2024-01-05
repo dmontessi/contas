@@ -109,6 +109,19 @@ class ContaController extends Controller
         return view('contas.edit', compact('conta', 'devedores', 'fornecedores', 'formaspagamentos', 'contaspagamentos'));
     }
 
+    public function pay(Conta $conta)
+    {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403, 'Não autorizado');
+        }
+
+        $formaspagamentos = FormaPagamento::all();
+        $devedores = Devedor::where('user_id', auth()->id())->get();
+        $fornecedores = Fornecedor::where('user_id', auth()->id())->get();
+        $contaspagamentos = ContaBancaria::where('user_id', auth()->id())->get();
+        return view('contas.pay', compact('conta', 'devedores', 'fornecedores', 'formaspagamentos', 'contaspagamentos'));
+    }
+
     public function update(Request $request, Conta $conta)
     {
         $request->validate([

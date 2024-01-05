@@ -138,28 +138,15 @@ $contador = $contas_vencendo->count();
         }).format(value);
     }
 
+    var dados = @json($grafico1);
     var grafico1 = new Chart(document.getElementById('grafico1').getContext('2d'), {
         type: 'bar',
         data: {
-
-            labels: [
-                @foreach($grafico as $chave => $dados)
-                    '{{ $chave }}',
-                @endforeach
-            ],
-
+            labels: Object.keys(dados),
             datasets: [{
                 label: 'Valor por devedor',
-                data: [
-                    @foreach($grafico as $chave => $dados)
-                        {{ $dados['valor'] }},
-                    @endforeach
-                ],
-                backgroundColor: [
-                    @foreach($grafico as $chave => $dados)
-                        '{{ $dados['cor'] }}',
-                    @endforeach
-                ],
+                data: Object.values(dados).map(item => item.valor),
+                backgroundColor: Object.values(dados).map(item => item.cor),
                 borderWidth: 1
             }]
         },
@@ -181,14 +168,10 @@ $contador = $contas_vencendo->count();
                 }
             }
         }
-
     });
 
     var dados = @json($grafico2);
-
-    var ctx = document.getElementById('grafico2').getContext('2d');
-
-    var chart = new Chart(ctx, {
+    var grafico2 = new Chart(document.getElementById('grafico2').getContext('2d'), {
         type: 'line',
         data: {
             labels: Object.keys(dados),

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Conta;
 use App\Models\Devedor;
-use App\Services\TelegramService;
 
 class HomeController extends Controller
 {
@@ -47,12 +46,12 @@ class HomeController extends Controller
             ->where('user_id', auth()->id())
             ->get();
 
-        $grafico = [];
+        $grafico1 = [];
 
         foreach ($_contas as $_conta) {
-            $valor_atual = $grafico[$_conta->devedor->apelido]['valor'] ?? 0;
-            $grafico[$_conta->devedor->apelido]['valor'] = $valor_atual + $_conta->valor;
-            $grafico[$_conta->devedor->apelido]['cor'] = $_conta->devedor->cor;
+            $valor_atual = $grafico1[$_conta->devedor->apelido]['valor'] ?? 0;
+            $grafico1[$_conta->devedor->apelido]['valor'] = $valor_atual + $_conta->valor;
+            $grafico1[$_conta->devedor->apelido]['cor'] = $_conta->devedor->cor;
         }
 
         $devedores = Devedor::where('user_id', auth()->id())->pluck('apelido', 'id')->all();
@@ -81,6 +80,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('contas_vencendo', 'pagos', 'abertos', 'total', 'grafico', 'devedores', 'grafico2'));
+        return view('home', compact('contas_vencendo', 'pagos', 'abertos', 'total', 'grafico1', 'grafico2'));
     }
 }

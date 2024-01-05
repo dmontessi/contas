@@ -25,6 +25,8 @@ Route::resource('devedores', App\Http\Controllers\DevedorController::class)
 Route::resource('contas', App\Http\Controllers\ContaController::class)
     ->parameters(['contas' => 'conta']);
 
+Route::get('contas/{conta}/pay', [App\Http\Controllers\ContaController::class, 'pay'])->name('contas.pay');
+
 Route::resource('bancos', App\Http\Controllers\BancoController::class)
     ->parameters(['bancos' => 'banco']);
 
