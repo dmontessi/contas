@@ -3,13 +3,13 @@
 @section('content')
 
 @php
-$contador = $vencidas_vencendo->count();
+$contador = $devendo->count();
 @endphp
 
 <div class="d-flex flex-column my-4">
 
     <div class="d-flex justify-content-center row">
-        @if($contas_vencidas->count() > 0)
+        @if($total_vencido > 0)
             <div class="col-md-2">
                 <div class="card p-2 mb-2 text-bg-dark">
                     <div class="d-flex justify-content-between align-items-center px-2">
@@ -22,13 +22,13 @@ $contador = $vencidas_vencendo->count();
                     <hr class="my-1">
 
                     <div class="d-flex justify-content-center">
-                        <span class="fs-3 fw-bold">{{ number_format($contas_vencidas->sum('valor'), 2, ',', '.') }}</span>
+                        <span class="fs-3 fw-bold">{{ number_format($total_vencido, 2, ',', '.') }}</span>
                     </div>
                 </div>
             </div>
         @endif
 
-        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+        <div class="@if($total_vencido > 0) col-md-2 @else col-md-3 @endif">
             <div class="card p-2 mb-2 text-bg-danger">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-6 fw-bold">
@@ -40,58 +40,58 @@ $contador = $vencidas_vencendo->count();
                 <hr class="my-1">
 
                 <div class="d-flex justify-content-center">
-                    <span class="fs-3 fw-bold">{{ number_format($contas_vencendo->sum('valor'), 2, ',', '.') }}</span>
+                    <span class="fs-3 fw-bold">{{ number_format($total_vencendo, 2, ',', '.') }}</span>
                 </div>
             </div>
         </div>
 
-        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+        <div class="@if($total_vencido > 0) col-md-2 @else col-md-3 @endif">
             <div class="card p-2 mb-2 text-bg-success">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-6 fw-bold">
                         ✅ Pagos
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
+                    <small class="fw-light">{{ $mes_atual }}</small>
                 </div>
 
                 <hr class="my-1">
 
                 <div class="d-flex justify-content-center">
-                    <span class="fs-3 fw-bold">{{ number_format($pagos, 2, ',', '.') }}</span>
+                    <span class="fs-3 fw-bold">{{ number_format($total_pago, 2, ',', '.') }}</span>
                 </div>
             </div>
         </div>
 
-        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+        <div class="@if($total_vencido > 0) col-md-2 @else col-md-3 @endif">
             <div class="card p-2 mb-2 text-bg-warning">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-6 fw-bold">
                         📢 Aberto
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
+                    <small class="fw-light">{{ $mes_atual }}</small>
                 </div>
 
                 <hr class="my-1">
 
                 <div class="d-flex justify-content-center">
-                    <span class="fs-3 fw-bold">{{ number_format($abertos, 2, ',', '.') }}</span>
+                    <span class="fs-3 fw-bold">{{ number_format($total_aberto, 2, ',', '.') }}</span>
                 </div>
             </div>
         </div>
 
-        <div class="@if($contas_vencidas->count() > 0) col-md-2 @else col-md-3 @endif">
+        <div class="@if($total_vencido > 0) col-md-2 @else col-md-3 @endif">
             <div class="card p-2 mb-2 text-bg-primary">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-6 fw-bold">
                         📊 Total
                     </span>
-                    <small class="fw-light">{{ ucfirst(\Carbon\Carbon::now()->locale('pt-BR')->isoFormat('MMMM')) }}</small>
+                    <small class="fw-light">{{ $mes_atual }}</small>
                 </div>
 
                 <hr class="my-1">
 
                 <div class="d-flex justify-content-center">
-                    <span class="fs-3 fw-bold">{{ number_format($total, 2, ',', '.') }}</span>
+                    <span class="fs-3 fw-bold">{{ number_format($total_mensal, 2, ',', '.') }}</span>
                 </div>
             </div>
         </div>
@@ -114,7 +114,7 @@ $contador = $vencidas_vencendo->count();
     <div class="d-flex justify-content-center mt-4">
         <small class="d-inline-flex px-2 py-1 fw-semibold text-danger bg-danger-subtle border border-danger-subtle rounded-2">
             <i class="bi bi-exclamation-triangle me-1"></i>
-            <span>Você possui contas @if($contas_vencidas->count() > 0) vencidas @endif @if($contas_vencidas->count() > 0 && $vencendo) e @endif @if($vencendo) vencendo {{ $vencendo }}@endif 💸</span>
+            <span>Você possui contas a pagar 💸</span>
         </small>
     </div>
 
@@ -131,7 +131,7 @@ $contador = $vencidas_vencendo->count();
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($vencidas_vencendo as $conta)
+                    @foreach ($devendo as $conta)
                     <tr>
                         <td class="text-center align-middle m-0 py-0 px-1 @if (\Carbon\Carbon::parse($conta->vencimento)->lt(now()->startOfDay())) table-danger text-danger @endif" style="color:{{$conta->devedor->cor}}">
                             <a href="{{ route('contas.pay', $conta->id) }}" class="list-group-item list-group-item-action">

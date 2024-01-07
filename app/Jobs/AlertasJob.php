@@ -35,27 +35,25 @@ class AlertasJob implements ShouldQueue, ShouldBeUnique
     public function send()
     {
         $telegramService = new TelegramService();
+        $hoje = Carbon::now();
 
-        $hoje = Carbon::today();
-        $diaDaSemana = $hoje->dayOfWeek;
-
-        if ($diaDaSemana === Carbon::FRIDAY) {
+        if ($hoje->dayOfWeek === Carbon::FRIDAY) {
             $contas = Conta::orderBy('vencimento', 'asc')
                 ->whereNull('data_pagamento')
                 ->where(function ($query) use ($hoje) {
-                    $query->whereDate('vencimento', $hoje);
-                    $query->orWhere(function ($query) use ($hoje) {
-                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SATURDAY));
-                    });
-                    $query->orWhere(function ($query) use ($hoje) {
-                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
-                    });
+                    $query->where('vencimento', '<', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->copy()->next(Carbon::SATURDAY))
+                        ->orWhere('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
                 })
                 ->get();
         } else {
             $contas = Conta::orderBy('vencimento', 'asc')
                 ->whereNull('data_pagamento')
-                ->whereDate('vencimento', $hoje)
+                ->where(function ($query) use ($hoje) {
+                    $query->where('vencimento', '<', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->format('Y-m-d'));
+                })
                 ->get();
         }
 
@@ -65,6 +63,10 @@ class AlertasJob implements ShouldQueue, ShouldBeUnique
                     '➡️ ' . '<strong>' . $conta->descricao . '</strong>' . ' de ' . $conta->fornecedor->apelido . ' vencendo ' . Carbon::parse($conta->vencimento)->isoFormat('dddd, DD [de] MMMM [de] YYYY') . "\n" .
                     '💰 ' . '<strong>Valor</strong> R$ ' . number_format($conta->valor, 2, ',', '.');
 
+                    if (Carbon::parse($conta->vencimento)->lt($hoje->format('Y-m-d'))) {
+                        $message = $message . "\n\n" . '🚨 ' . '<strong>VENCIDA</strong>';
+                    }
+                    
                 if ($conta->cobranca) {
                     $file_path = public_path($conta->cobranca);
 

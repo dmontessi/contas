@@ -18,99 +18,62 @@ class HomeController extends Controller
 
     public function index()
     {
-        $hoje = Carbon::today();
-        $diaDaSemana = $hoje->dayOfWeek;
+        $hoje = Carbon::now();
+        $mes_atual = ucfirst($hoje->locale('pt-BR')->isoFormat('MMMM'));
 
-        if ($diaDaSemana === Carbon::FRIDAY) {
-            $contas_vencendo = Conta::orderBy('vencimento', 'asc')
-                ->whereNull('data_pagamento')
+        $mensais = Conta::orderBy('vencimento', 'asc')
+            ->where('user_id', auth()->id())
+            ->whereYear('vencimento', $hoje->format('Y'))
+            ->whereMonth('vencimento', $hoje->format('m'))
+            ->get();
+
+        $total_mensal = $mensais->sum('valor');
+
+        $total_aberto = Conta::orderBy('vencimento', 'asc')
+            ->where('user_id', auth()->id())
+            ->whereNull('data_pagamento')
+            ->whereYear('vencimento', $hoje->format('Y'))
+            ->whereMonth('vencimento', $hoje->format('m'))
+            ->sum('valor');
+
+        $total_pago = Conta::orderBy('vencimento', 'asc')
+            ->where('user_id', auth()->id())
+            ->whereNotNull('data_pagamento')
+            ->whereYear('vencimento', $hoje->format('Y'))
+            ->whereMonth('vencimento', $hoje->format('m'))
+            ->sum('valor');
+
+        if ($hoje->dayOfWeek === Carbon::FRIDAY) {
+            $devendo = Conta::orderBy('vencimento', 'asc')
                 ->where('user_id', auth()->id())
+                ->whereNull('data_pagamento')
                 ->where(function ($query) use ($hoje) {
-                    $query->whereDate('vencimento', $hoje);
-                    $query->orWhere(function ($query) use ($hoje) {
-                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SATURDAY));
-                    });
-                    $query->orWhere(function ($query) use ($hoje) {
-                        $query->whereDate('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
-                    });
+                    $query->where('vencimento', '<', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->copy()->next(Carbon::SATURDAY))
+                        ->orWhere('vencimento', $hoje->copy()->next(Carbon::SUNDAY));
                 })
                 ->get();
         } else {
-            $contas_vencendo = Conta::orderBy('vencimento', 'asc')
-                ->whereNull('data_pagamento')
-                ->whereDate('vencimento', $hoje)
+            $devendo = Conta::orderBy('vencimento', 'asc')
                 ->where('user_id', auth()->id())
+                ->whereNull('data_pagamento')
+                ->where(function ($query) use ($hoje) {
+                    $query->where('vencimento', '<', $hoje->format('Y-m-d'))
+                        ->orWhere('vencimento', $hoje->format('Y-m-d'));
+                })
                 ->get();
         }
 
-        $contas_vencidas = Conta::orderBy('vencimento', 'asc')
-            ->whereNull('data_pagamento')
-            ->whereDate('vencimento', '<', $hoje)
-            ->where('user_id', auth()->id())
-            ->get();
-
-        $vencendo_hoje = $contas_vencendo->contains(function ($conta) use ($hoje) {
-            return Carbon::parse($conta->vencimento)->toDateString() === $hoje->toDateString();
-        });
-
-        $vencendo_sabado = $contas_vencendo->contains(function ($conta) {
-            return Carbon::parse($conta->vencimento)->dayOfWeek === Carbon::SATURDAY;
-        });
-
-        $vencendo_domingo = $contas_vencendo->contains(function ($conta) {
-            return Carbon::parse($conta->vencimento)->dayOfWeek === Carbon::SUNDAY;
-        });
-
-        $vencendo = '';
-
-        if ($vencendo_hoje) {
-            $vencendo .= 'hoje';
-        }
-
-        if ($vencendo_sabado) {
-            if ($vencendo !== '') {
-                $vencendo .= $vencendo_domingo ? ', ' : ' e ';
-            }
-            $vencendo .= 'sábado';
-        }
-
-        if ($vencendo_domingo) {
-            if ($vencendo !== '') {
-                $vencendo .= ' e ';
-            }
-            $vencendo .= 'domingo';
-        }
-
-        $vencidas_vencendo = $contas_vencidas->merge($contas_vencendo);
-
-        $abertos = Conta::whereNull('data_pagamento')
-            ->whereYear('vencimento', Carbon::today()->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->format('m'))
-            ->where('user_id', auth()->id())
-            ->sum('valor');
-
-        $pagos = Conta::whereNotNull('data_pagamento')
-            ->whereYear('vencimento', Carbon::today()->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->format('m'))
-            ->where('user_id', auth()->id())
-            ->sum('valor');
-
-        $total = Conta::whereYear('vencimento', Carbon::today()->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->format('m'))
-            ->where('user_id', auth()->id())
-            ->sum('valor');
-
-        $_contas = Conta::whereYear('vencimento', Carbon::today()->format('Y'))
-            ->whereMonth('vencimento', Carbon::today()->format('m'))
-            ->where('user_id', auth()->id())
-            ->get();
+        $total_vencido = $devendo->where('vencimento', '<', $hoje->format('Y-m-d'))->sum('valor');
+        $total_vencendo = $devendo->where('vencimento', '>=', $hoje->format('Y-m-d'))->sum('valor');
 
         $grafico1 = [];
 
-        foreach ($_contas as $_conta) {
-            $valor_atual = $grafico1[$_conta->devedor->apelido]['valor'] ?? 0;
-            $grafico1[$_conta->devedor->apelido]['valor'] = $valor_atual + $_conta->valor;
-            $grafico1[$_conta->devedor->apelido]['cor'] = $_conta->devedor->cor;
+        foreach ($mensais as $mensal) {
+            $valor_atual = $grafico1[$mensal->devedor->apelido]['valor'] ?? 0;
+            $grafico1[$mensal->devedor->apelido]['valor'] = $valor_atual + $mensal->valor;
+            $grafico1[$mensal->devedor->apelido]['cor'] = $mensal->devedor->cor;
         }
 
         $devedores = Devedor::where('user_id', auth()->id())->pluck('apelido', 'id')->all();
@@ -139,6 +102,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('vencidas_vencendo', 'contas_vencidas', 'contas_vencendo', 'vencendo', 'pagos', 'abertos', 'total', 'grafico1', 'grafico2'));
+        return view('home', compact('mes_atual', 'devendo', 'total_vencido', 'total_vencendo', 'total_aberto', 'total_pago', 'total_mensal', 'grafico1', 'grafico2'));
     }
 }
