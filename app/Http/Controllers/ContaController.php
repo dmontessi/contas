@@ -76,8 +76,8 @@ class ContaController extends Controller
 
     public function create()
     {
-        $devedores = Devedor::all();
-        $fornecedores = Fornecedor::all();
+        $devedores = Devedor::where('user_id', auth()->id())->get();
+        $fornecedores = Fornecedor::where('user_id', auth()->id())->get();
         return view('contas.create', compact('devedores', 'fornecedores'));
     }
 
