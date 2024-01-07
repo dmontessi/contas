@@ -45,6 +45,7 @@ class HomeController extends Controller
 
         if ($hoje->dayOfWeek === Carbon::FRIDAY) {
             $devendo = Conta::orderBy('vencimento', 'asc')
+                ->orderBy('devedor_id', 'asc')
                 ->where('user_id', auth()->id())
                 ->whereNull('data_pagamento')
                 ->where(function ($query) use ($hoje) {
@@ -56,6 +57,7 @@ class HomeController extends Controller
                 ->get();
         } else {
             $devendo = Conta::orderBy('vencimento', 'asc')
+                ->orderBy('devedor_id', 'asc')
                 ->where('user_id', auth()->id())
                 ->whereNull('data_pagamento')
                 ->where(function ($query) use ($hoje) {
