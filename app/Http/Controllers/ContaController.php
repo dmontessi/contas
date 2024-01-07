@@ -54,9 +54,8 @@ class ContaController extends Controller
         $descricao = $request->input('descricao');
         $mes = $request->input('mes') ? Carbon::parse($request->input('mes') . '-01') : now();
 
-        $contas = Conta::orderByRaw("CASE WHEN vencimento = '" . Carbon::today()->toDateString() . "' THEN 1 ELSE 2 END")
-            ->orderBy('vencimento', 'asc')
-            ->orderBy('id', 'desc')
+        $contas = Conta::orderBy('data_pagamento', 'desc')
+            ->orderBy('devedor_id', 'asc')
             ->where('user_id', auth()->id())
             ->whereNotNull('data_pagamento')
             ->where(function ($query) use ($mes) {
