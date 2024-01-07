@@ -250,6 +250,27 @@ class ContaController extends Controller
             }
         }
 
+        error_log($request->input('valor', 0) - $request->input('valor_pago', 0));
+
+        if ($request->input('data_pagamento', null) 
+            && ($request->input('valor_pago', 0) > 0)
+            && ($request->input('valor_pago', 0) < $request->input('valor', 0)))
+        {
+            $prox_conta = $conta->replicate();
+            $prox_conta->descricao = $conta->descricao . ' (Valor Pendente)';
+            unset($prox_conta['cobranca']);
+            unset($prox_conta['valor_pago']);
+            unset($prox_conta['data_pagamento']);
+            unset($prox_conta['formapagamento_id']);
+            unset($prox_conta['contabancaria_pagamento_id']);
+            unset($prox_conta['comprovante']);
+            unset($prox_conta['anexo']);
+            $prox_conta->valor = $conta->valor - $request->input('valor_pago', null);
+            $prox_conta->created_at = now();
+            $prox_conta->updated_at = null;
+            $prox_conta->save();
+        }
+
         $request->merge(['recorrente' => $request->input('recorrente', 0)]);
         $conta->update($request->except('cobranca', 'comprovante'));
 
