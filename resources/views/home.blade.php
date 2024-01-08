@@ -11,7 +11,7 @@ $contador = $devendo->count();
     <div class="d-flex justify-content-center row">
         @if($total_vencido > 0)
             <div class="col-md-2">
-                <div class="card p-2 mb-2 text-bg-dark">
+                <div class="card p-2 mb-2 text-bg-danger">
                     <div class="d-flex justify-content-between align-items-center px-2">
                         <span class="fs-6 fw-bold">
                             🚨 Vencidas
@@ -29,7 +29,7 @@ $contador = $devendo->count();
         @endif
 
         <div class="@if($total_vencido > 0) col-md-2 @else col-md-3 @endif">
-            <div class="card p-2 mb-2 text-bg-danger">
+            <div class="card p-2 mb-2 text-bg-dark">
                 <div class="d-flex justify-content-between align-items-center px-2">
                     <span class="fs-6 fw-bold">
                         ⚠️ Vencendo
